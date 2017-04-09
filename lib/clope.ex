@@ -1,9 +1,12 @@
 defmodule Clope do
   alias Clope.Algorithm
+  alias Clope.Utils
 
   def cluster(transactions, repulsion)
       when is_list(transactions)
       when is_number(repulsion) do
-    Algorithm.clusters(transactions, repulsion)
+    transactions
+    |> Utils.prepare_transactions
+    |> Algorithm.clusters(repulsion)
   end
 end

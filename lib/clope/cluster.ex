@@ -4,7 +4,8 @@ defmodule Clope.Cluster do
   alias Clope.Transaction
   alias Clope.Cluster
 
-  def cluster(transactions, repulsion) do
+  def add_transaction(%Transaction{} = transaction) do
+    %Cluster{transactions: [transaction]}
   end
 
   def add_transaction(%Cluster{transactions: transactions}, %Transaction{} = transaction) do
