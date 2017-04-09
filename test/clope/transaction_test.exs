@@ -1,15 +1,24 @@
 defmodule Clope.TransactionTest do
   use ExUnit.Case
   alias Clope.Transaction
-  @transaction {"transaction", ["object1", "object10", "object100"]}
+  alias Clope.Object
+
+  @transaction %Transaction{
+    name: "transaction",
+    objects: [
+      %Object{value: "object1"},
+      %Object{value: "object10"},
+      %Object{value: "object100"}
+    ]
+  }
 
   test "calculates transaction stats" do
     stats = @transaction |> Transaction.object_stats
-    {_name, objects} = @transaction
+    %Transaction{objects: objects} = @transaction
 
     objects
-    |> Enum.each(fn(object) ->
-      %{^object => 1} = stats
+    |> Enum.each(fn(%Object{value: value}) ->
+      %{^value => 1} = stats
     end)
   end
 end

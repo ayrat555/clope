@@ -1,14 +1,29 @@
 defmodule Clope.Cluster do
+  defstruct [:transactions]
+
   alias Clope.Transaction
+  alias Clope.Cluster
 
   def cluster(transactions, repulsion) do
   end
 
-  def number_of_transactions(cluster) do
-    cluster |> Enum.count
+  def add_transaction(%Cluster{transactions: transactions}, %Transaction{} = transaction) do
+    new_transactions = transactions ++ transaction
+
+    %Cluster{transactions: new_transactions}
   end
 
-  def attributes(cluster) do
+  def remove_transaction(%Cluster{transactions: transactions}, %Transaction{} = transaction) do
+    new_transactions = transactions -- transaction
+
+    %Cluster{transactions: new_transactions}
+  end
+
+  def number_of_transactions(%Cluster{transactions: transactions}) do
+    transactions |> Enum.count
+  end
+
+  def attributes(%Cluster{} = cluster) do
     cluster_stats = object_stats(cluster)
     width = cluster_stats |> Enum.count
     height = number_of_objects(cluster) / width
@@ -16,11 +31,11 @@ defmodule Clope.Cluster do
     {height, width}
   end
 
-  def object_stats(cluster) do
-    cluster |> Enum.reduce(%{}, &add_stats/2)
+  def object_stats(%Cluster{transactions: transactions}) do
+    transactions |> Enum.reduce(%{}, &add_stats/2)
   end
 
-  defp add_stats(transaction, result) do
+  defp add_stats(%Transaction{} = transaction, result) do
     transaction_stats = transaction |> Transaction.object_stats
 
     result |> Map.merge(transaction_stats, fn(_key, value1, value2) ->
@@ -28,10 +43,10 @@ defmodule Clope.Cluster do
     end)
   end
 
-  defp number_of_objects(cluster) do
-    cluster
-    |> Enum.reduce(0, fn({_name, objects}, count) ->
-      count + Enum.count(objects)
+  defp number_of_objects(%Cluster{transactions: transactions}) do
+    transactions
+    |> Enum.reduce(0, fn(transaction, count) ->
+      count + Transaction.number_of_objects(transaction)
     end)
   end
 end

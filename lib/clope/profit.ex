@@ -1,7 +1,8 @@
 defmodule Clope.Profit do
   alias Clope.Cluster
+  alias Clope.Partition
 
-  def value(clusters, repulsion) do
+  def value(%Partition{clusters: clusters}, repulsion) when is_number(repulsion) do
     numerator = 0
     denominator = 0
     accumulator = {numerator, denominator, repulsion}

@@ -1,10 +1,26 @@
 defmodule Clope.ClusterTest do
   use ExUnit.Case
   alias Clope.Cluster
-  @cluster [
-    {"transaction1", ["object1", "object2", "object5"]},
-    {"transaction2", ["object1", "object5"]}
-  ]
+  alias Clope.Transaction
+  alias Clope.Object
+
+  @cluster %Cluster{
+    transactions: [
+      %Transaction{
+        objects: [
+          %Object{value: "object1"},
+          %Object{value: "object2"},
+          %Object{value: "object5"}
+        ]
+      },
+      %Transaction{
+        objects: [
+          %Object{value: "object1"},
+          %Object{value: "object5"}
+        ]
+      }
+    ]
+  }
 
   test "returns number of transactions" do
     result = @cluster |> Cluster.number_of_transactions

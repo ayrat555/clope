@@ -1,15 +1,41 @@
 defmodule Clope.ProfitTest do
   use ExUnit.Case
   alias Clope.Profit
-  @partition [
-    [
-      {"transaction1", ["object1", "object2", "object5"]},
-      {"transaction2", ["object1", "object5"]}
-    ],
-    [
-      {"transaction3", ["object2"]}
+  alias Clope.Partition
+  alias Clope.Cluster
+  alias Clope.Transaction
+  alias Clope.Object
+
+  @partition %Partition{
+    clusters: [
+      %Cluster{
+        transactions: [
+          %Transaction{
+            objects: [
+              %Object{value: "object1"},
+              %Object{value: "object2"},
+              %Object{value: "object5"}
+            ]
+          },
+          %Transaction{
+            objects: [
+              %Object{value: "object1"},
+              %Object{value: "object5"}
+            ]
+          }
+        ]
+      },
+      %Cluster{
+        transactions: [
+          %Transaction{
+            objects: [
+              %Object{value: "object2"}
+            ]
+          }
+        ]
+      }
     ]
-  ]
+  }
   @repulsion 2
 
 
