@@ -6,6 +6,12 @@ defmodule Clope.ClusterTest do
     {"transaction2", ["object1", "object5"]}
   ]
 
+  test "returns number of transactions" do
+    result = @cluster |> Cluster.number_of_transactions
+
+    assert result == 2
+  end
+
   test "calculates cluster stats" do
     result = @cluster |> Cluster.object_stats
 

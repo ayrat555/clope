@@ -4,6 +4,10 @@ defmodule Clope.Cluster do
   def cluster(transactions, repulsion) do
   end
 
+  def number_of_transactions(cluster) do
+    cluster |> Enum.count
+  end
+
   def attributes(cluster) do
     cluster_stats = object_stats(cluster)
     width = cluster_stats |> Enum.count
