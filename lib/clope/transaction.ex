@@ -4,6 +4,12 @@ defmodule Clope.Transaction do
   alias Clope.Transaction
   alias Clope.Object
 
+  def transaction(name, objects)
+      when is_binary(name)
+      when is_list(objects) do
+    %Transaction{name: name, objects: objects}
+  end
+
   def number_of_objects(%Transaction{objects: objects}) do
     objects |> Enum.count
   end
