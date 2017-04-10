@@ -1,4 +1,5 @@
 # Clope
+[![Build Status](https://semaphoreci.com/api/v1/ayrat555/clope/branches/master/badge.svg)](https://semaphoreci.com/ayrat555/clope)
 
 **TODO: Add description**
 
