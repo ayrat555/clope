@@ -25,29 +25,29 @@ defmodule Clope.Cluster do
   end
 
   def attributes(%Cluster{} = cluster) do
-    cluster_stats = object_stats(cluster)
+    cluster_stats = item_stats(cluster)
     width = cluster_stats |> Enum.count
-    height = number_of_objects(cluster) / width
+    height = number_of_items(cluster) / width
 
     {height, width}
   end
 
-  def object_stats(%Cluster{transactions: transactions}) do
+  def item_stats(%Cluster{transactions: transactions}) do
     transactions |> Enum.reduce(%{}, &add_stats/2)
   end
 
   defp add_stats(%Transaction{} = transaction, result) do
-    transaction_stats = transaction |> Transaction.object_stats
+    transaction_stats = transaction |> Transaction.item_stats
 
     result |> Map.merge(transaction_stats, fn(_key, value1, value2) ->
       value1 + value2
     end)
   end
 
-  defp number_of_objects(%Cluster{transactions: transactions}) do
+  defp number_of_items(%Cluster{transactions: transactions}) do
     transactions
     |> Enum.reduce(0, fn(transaction, count) ->
-      count + Transaction.number_of_objects(transaction)
+      count + Transaction.number_of_items(transaction)
     end)
   end
 end

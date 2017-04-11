@@ -3,8 +3,8 @@ defmodule Clope.UtilsTest do
   alias Clope.Utils
 
   @input_transactions [
-    {"transaction1", ["object1", "object2"]},
-    {"transaction2", ["object5", "object1"]}
+    {"transaction1", ["item1", "item2"]},
+    {"transaction2", ["item5", "item1"]}
   ]
 
   test "converts input data to internal represantation" do
@@ -12,15 +12,15 @@ defmodule Clope.UtilsTest do
 
     [%Clope.Transaction{
         name: "transaction1",
-        objects: [
-          %Clope.Object{value: "object1"},
-          %Clope.Object{value: "object2"}
+        items: [
+          %Clope.Item{value: "item1"},
+          %Clope.Item{value: "item2"}
         ]},
      %Clope.Transaction{
        name: "transaction2",
-       objects: [
-         %Clope.Object{value: "object5"},
-         %Clope.Object{value: "object1"}
+       items: [
+         %Clope.Item{value: "item5"},
+         %Clope.Item{value: "item1"}
        ]}
     ] = result
   end

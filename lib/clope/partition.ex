@@ -7,6 +7,10 @@ defmodule Clope.Partition do
     %Partition{clusters: clusters}
   end
 
+  def clusters(%Partition{clusters: clusters}) do
+    clusters
+  end
+
   def add_cluster(%Cluster{} = cluster) do
     %Partition{clusters: [cluster]}
   end

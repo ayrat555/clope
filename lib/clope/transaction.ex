@@ -1,24 +1,24 @@
 defmodule Clope.Transaction do
-  defstruct [:objects, :name]
+  defstruct [:items, :name]
 
   alias Clope.Transaction
-  alias Clope.Object
+  alias Clope.Item
 
-  def transaction(name, objects)
+  def transaction(name, items)
       when is_binary(name)
-      when is_list(objects) do
-    %Transaction{name: name, objects: objects}
+      when is_list(items) do
+    %Transaction{name: name, items: items}
   end
 
-  def number_of_objects(%Transaction{objects: objects}) do
-    objects |> Enum.count
+  def number_of_items(%Transaction{items: items}) do
+    items |> Enum.count
   end
 
-  def object_stats(%Transaction{objects: objects}) do
-    objects |> Enum.reduce(%{}, &add_stats/2)
+  def item_stats(%Transaction{items: items}) do
+    items |> Enum.reduce(%{}, &add_stats/2)
   end
 
-  defp add_stats(%Object{value: value}, result) do
+  defp add_stats(%Item{value: value}, result) do
     Map.put(result, value, 1)
   end
 end

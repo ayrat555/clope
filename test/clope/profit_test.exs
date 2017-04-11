@@ -4,23 +4,23 @@ defmodule Clope.ProfitTest do
   alias Clope.Partition
   alias Clope.Cluster
   alias Clope.Transaction
-  alias Clope.Object
+  alias Clope.Item
 
   @partition %Partition{
     clusters: [
       %Cluster{
         transactions: [
           %Transaction{
-            objects: [
-              %Object{value: "object1"},
-              %Object{value: "object2"},
-              %Object{value: "object5"}
+            items: [
+              %Item{value: "item1"},
+              %Item{value: "item2"},
+              %Item{value: "item5"}
             ]
           },
           %Transaction{
-            objects: [
-              %Object{value: "object1"},
-              %Object{value: "object5"}
+            items: [
+              %Item{value: "item1"},
+              %Item{value: "item5"}
             ]
           }
         ]
@@ -28,8 +28,8 @@ defmodule Clope.ProfitTest do
       %Cluster{
         transactions: [
           %Transaction{
-            objects: [
-              %Object{value: "object2"}
+            items: [
+              %Item{value: "item2"}
             ]
           }
         ]

@@ -2,21 +2,21 @@ defmodule Clope.ClusterTest do
   use ExUnit.Case
   alias Clope.Cluster
   alias Clope.Transaction
-  alias Clope.Object
+  alias Clope.Item
 
   @cluster %Cluster{
     transactions: [
       %Transaction{
-        objects: [
-          %Object{value: "object1"},
-          %Object{value: "object2"},
-          %Object{value: "object5"}
+        items: [
+          %Item{value: "item1"},
+          %Item{value: "item2"},
+          %Item{value: "item5"}
         ]
       },
       %Transaction{
-        objects: [
-          %Object{value: "object1"},
-          %Object{value: "object5"}
+        items: [
+          %Item{value: "item1"},
+          %Item{value: "item5"}
         ]
       }
     ]
@@ -29,11 +29,11 @@ defmodule Clope.ClusterTest do
   end
 
   test "calculates cluster stats" do
-    result = @cluster |> Cluster.object_stats
+    result = @cluster |> Cluster.item_stats
 
-    %{"object1" => 2} = result
-    %{"object2" => 1} = result
-    %{"object5" => 2} = result
+    %{"item1" => 2} = result
+    %{"item2" => 1} = result
+    %{"item5" => 2} = result
   end
 
   test "calculates cluster attributes" do
