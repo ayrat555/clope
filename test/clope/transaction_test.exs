@@ -1,16 +1,10 @@
 defmodule Clope.TransactionTest do
   use ExUnit.Case
   alias Clope.Transaction
+  alias Clope.TestHelper
   alias Clope.Item
 
-  @transaction %Transaction{
-    name: "transaction",
-    items: [
-      %Item{value: "item1"},
-      %Item{value: "item10"},
-      %Item{value: "item100"}
-    ]
-  }
+  @transaction TestHelper.create(:transaction, ["a", "b", "c"])
 
   test "calculates transaction stats" do
     stats = @transaction |> Transaction.item_stats

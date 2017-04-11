@@ -1,44 +1,35 @@
 defmodule Clope.ClusterTest do
   use ExUnit.Case
   alias Clope.Cluster
-  alias Clope.Transaction
-  alias Clope.Item
+  alias Clope.TestHelper
 
-  @cluster %Cluster{
-    transactions: [
-      %Transaction{
-        items: [
-          %Item{value: "item1"},
-          %Item{value: "item2"},
-          %Item{value: "item5"}
-        ]
-      },
-      %Transaction{
-        items: [
-          %Item{value: "item1"},
-          %Item{value: "item5"}
-        ]
-      }
+  @cluster TestHelper.create(:cluster,
+    [
+      {"transaction1", ["a", "c", "d"]},
+      {"transaction2", ["d", "e"]},
+      {"transaction3", ["d", "e", "f"]}
     ]
-  }
+  )
 
   test "returns number of transactions" do
     result = @cluster |> Cluster.number_of_transactions
 
-    assert result == 2
+    assert result == 3
   end
 
   test "calculates cluster stats" do
     result = @cluster |> Cluster.item_stats
 
-    %{"item1" => 2} = result
-    %{"item2" => 1} = result
-    %{"item5" => 2} = result
+    %{"d" => 3} = result
+    %{"e" => 2} = result
+    %{"a" => 1} = result
+    %{"c" => 1} = result
+    %{"f" => 1} = result
   end
 
   test "calculates cluster attributes" do
     result = @cluster |> Cluster.attributes
 
-    { 5/3, 3 } = result
+    { 8/5, 5 } = result
   end
 end
