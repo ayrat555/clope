@@ -1,9 +1,9 @@
 defmodule Clope.ProfitTest do
   use ExUnit.Case
+  import Clope.TestFactory
   alias Clope.Profit
-  alias Clope.TestHelper
 
-  @partition TestHelper.create(:partition,
+  @partition build_from_string(:partition,
     [
       [
         {"transaction1", ["a", "b", "c"]},
@@ -19,7 +19,7 @@ defmodule Clope.ProfitTest do
 
   test "calculates profit function value" do
     profit = Profit.value(@partition, @repulsion)
-    expected_profit = (3 * 5 / 3 / 9 * 2 + 1) / 3
+    expected_profit = 1.4444444444444446
 
     assert profit == expected_profit
   end

@@ -13,10 +13,14 @@ defmodule Clope.Profit do
     numerator / denominator
   end
 
-  defp reduce_function(cluster, {numerator, denominator, repulsion}) do
-    {height, width} = cluster |> Cluster.attributes
-    transaction_count = cluster |> Cluster.number_of_transactions
-    iteration_value = height * width / :math.pow(width, repulsion) * transaction_count
+  defp reduce_function(
+      %Cluster{
+        transaction_count: transaction_count,
+        width: width,
+        item_count: item_count
+      },
+      {numerator, denominator, repulsion}) do
+    iteration_value = item_count * width / :math.pow(width, repulsion) * transaction_count
 
     {numerator + iteration_value, denominator + transaction_count, repulsion}
   end

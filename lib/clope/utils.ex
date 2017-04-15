@@ -6,7 +6,7 @@ defmodule Clope.Utils do
     transactions |> Enum.map(&prepare_transaction/1)
   end
 
-  defp prepare_transaction({name, items})
+  def prepare_transaction({name, items})
       when is_binary(name)
       when is_list(items) do
     items = items |> prepare_items
@@ -14,7 +14,7 @@ defmodule Clope.Utils do
     Transaction.transaction(name, items)
   end
 
-  defp prepare_items(items) do
+  def prepare_items(items) do
    items
    |> Enum.uniq
    |> Enum.map(&Item.item/1)

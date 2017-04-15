@@ -1,53 +1,116 @@
 defmodule Clope.Cluster do
-  defstruct [:transactions]
+  defstruct transactions: [], transaction_count: 0,
+    item_count: 0,  occ: %{}, width: 0
 
   alias Clope.Transaction
   alias Clope.Cluster
+  alias Clope.Item
 
-  def add_transaction(%Transaction{} = transaction) do
-    %Cluster{transactions: [transaction]}
+  def add_transaction(
+      %Cluster{transactions: transactions} = cluster,
+      %Transaction{} = transaction) do
+    if transactions |> Enum.member?(transaction) do
+      cluster
+    else
+      _add_transaction(cluster, transaction)
+    end
   end
 
-  def add_transaction(%Cluster{transactions: transactions}, %Transaction{} = transaction) do
-    new_transactions = transactions ++ transaction
-
-    %Cluster{transactions: new_transactions}
+  def remove_transaction(
+      %Cluster{transactions: transactions} = cluster,
+      %Transaction{} = transaction) do
+    if transactions |> Enum.member?(transaction) do
+      _remove_transaction(cluster, transaction)
+    else
+      cluster
+    end
   end
 
-  def remove_transaction(%Cluster{transactions: transactions}, %Transaction{} = transaction) do
-    new_transactions = transactions -- transaction
+  defp _add_transaction(
+      %Cluster{
+        transactions: transactions,
+        item_count: item_count,
+        transaction_count: transaction_count,
+        occ: occ
+      },
+      %Transaction{items: items} = transaction) do
+    new_transactions = transactions ++ [transaction]
+    new_transaction_count = transaction_count + 1
+    {
+      new_width,
+      new_item_count,
+      new_occ
+    } = recalculate_stats(:add, items, item_count, occ)
 
-    %Cluster{transactions: new_transactions}
+    %Cluster{
+      transactions: new_transactions,
+      item_count: new_item_count,
+      transaction_count: new_transaction_count,
+      width: new_width,
+      item_count: new_item_count,
+      occ: new_occ
+    }
   end
 
-  def number_of_transactions(%Cluster{transactions: transactions}) do
-    transactions |> Enum.count
+  defp _remove_transaction(
+      %Cluster{
+        transactions: transactions,
+        item_count: item_count,
+        transaction_count: transaction_count,
+        occ: occ
+      },
+      %Transaction{items: items} = transaction) do
+    new_transactions = transactions -- [transaction]
+    new_transaction_count = transaction_count - 1
+    {
+      new_width,
+      new_item_count,
+      new_occ
+    } = recalculate_stats(:remove, items, item_count, occ)
+
+    %Cluster{
+      transactions: new_transactions,
+      item_count: new_item_count,
+      transaction_count: new_transaction_count,
+      width: new_width,
+      item_count: new_item_count,
+      occ: new_occ
+    }
   end
 
-  def attributes(%Cluster{} = cluster) do
-    cluster_stats = item_stats(cluster)
-    width = cluster_stats |> Enum.count
-    height = number_of_items(cluster) / width
+  defp recalculate_stats(:add, items, previous_item_count, previous_occ) do
+    acc = {previous_item_count, previous_occ}
 
-    {height, width}
+    {new_item_count, new_occ} =
+      items
+      |> Enum.reduce(acc, fn(%Item{value: value}, {item_count, occ}) ->
+        occ = occ |> Map.update(value, 1, &(&1 + 1))
+
+        {item_count + 1, occ}
+      end)
+    new_width = new_occ |> Enum.count
+
+    {new_width, new_item_count, new_occ}
   end
 
-  def item_stats(%Cluster{transactions: transactions}) do
-    transactions |> Enum.reduce(%{}, &add_stats/2)
-  end
+  defp recalculate_stats(:remove, items, previous_item_count, previous_occ) do
+    acc = {previous_item_count, previous_occ}
 
-  defp add_stats(%Transaction{} = transaction, result) do
-    transaction_stats = transaction |> Transaction.item_stats
+    {new_item_count, new_occ} =
+      items
+      |> Enum.reduce(acc, fn(%Item{value: value}, {item_count, occ}) ->
+        occ = occ |> Map.update(value, 1, &(&1 - 1))
 
-    result |> Map.merge(transaction_stats, fn(_key, value1, value2) ->
-      value1 + value2
-    end)
-  end
+        {item_count - 1, occ}
+      end)
 
-  defp number_of_items(%Cluster{transactions: transactions}) do
-    transactions
-    |> Enum.reduce(0, fn(transaction, count) ->
-      count + Transaction.number_of_items(transaction)
-    end)
+    new_occ =
+      new_occ |> Enum.drop_while(fn({_key, val}) ->
+        val == 0
+      end)
+      |> Map.new(fn(pair) -> pair  end)
+    new_width = new_occ |> Enum.count
+
+    {new_width, new_item_count, new_occ}
   end
 end

@@ -1,6 +1,6 @@
 defmodule Clope.PartitionTest do
   use ExUnit.Case
-  alias Clope.TestHelper
+  import Clope.TestFactory
   alias Clope.Partition
 
   test "adds cluster to partition" do
@@ -18,8 +18,8 @@ defmodule Clope.PartitionTest do
       {"transaction7", ["object1", "object2"]},
       {"transaction9", ["object5", "object6"]}
     ]
-    partition = TestHelper.create(:partition, partition)
-    new_cluster = TestHelper.create(:cluster, new_cluster)
+    partition = build_from_string(:partition, partition)
+    new_cluster = build_from_string(:cluster, new_cluster)
 
     new_partition = partition |> Partition.add_cluster(new_cluster)
 
@@ -38,8 +38,8 @@ defmodule Clope.PartitionTest do
         {"transaction4", ["object5", "object1"]}
       ]
     ]
-    cluster_to_remove = TestHelper.create(:cluster, Enum.at(partition, 1))
-    partition = TestHelper.create(:partition, partition)
+    cluster_to_remove = build_from_string(:cluster, Enum.at(partition, 1))
+    partition = build_from_string(:partition, partition)
 
     new_partition = partition |> Partition.remove_cluster(cluster_to_remove)
 
@@ -62,9 +62,9 @@ defmodule Clope.PartitionTest do
       {"transaction7", ["object1", "object2"]},
       {"transaction9", ["object5", "object6"]}
     ]
-    cluster_to_replace = TestHelper.create(:cluster, Enum.at(partition, 1))
-    partition = TestHelper.create(:partition, partition)
-    new_cluster = TestHelper.create(:cluster, new_cluster)
+    cluster_to_replace = build_from_string(:cluster, Enum.at(partition, 1))
+    partition = build_from_string(:partition, partition)
+    new_cluster = build_from_string(:cluster, new_cluster)
 
     new_partition = partition |> Partition.replace_cluster(cluster_to_replace, new_cluster)
 

@@ -1,18 +1,15 @@
 defmodule Clope.TransactionTest do
   use ExUnit.Case
+  import Clope.TestFactory
   alias Clope.Transaction
-  alias Clope.TestHelper
-  alias Clope.Item
 
-  @transaction TestHelper.create(:transaction, ["a", "b", "c"])
+  test "creates valid transaction" do
+    items = build_list(3, :item)
+    name = "transaction"
 
-  test "calculates transaction stats" do
-    stats = @transaction |> Transaction.item_stats
-    %Transaction{items: items} = @transaction
-
-    items
-    |> Enum.each(fn(%Item{value: value}) ->
-      %{^value => 1} = stats
-    end)
+    %Transaction{
+      name: ^name,
+      items: ^items,
+    } = Transaction.transaction(name, items)
   end
 end
