@@ -45,6 +45,15 @@ defmodule Clope.TestFactory do
     end)
   end
 
+  def build_from_string(:partition, clusters) do
+    clusters = clusters
+      |> Enum.map(fn(transactions) ->
+        build_from_string(:cluster, transactions)
+      end)
+
+    Partition.partition(clusters)
+  end
+
   def build_from_string(:cluster, transactions) do
     transactions = transactions |> Utils.prepare_transactions
     {transaction_count, item_count, width, occ} = transactions |> transaction_stats
@@ -58,12 +67,7 @@ defmodule Clope.TestFactory do
     }
   end
 
-  def build_from_string(:partition, clusters) do
-    clusters = clusters
-      |> Enum.map(fn(transactions) ->
-        build_from_string(:cluster, transactions)
-      end)
-
-    Partition.partition(clusters)
+  def build_from_string(:transaction, transaction) do
+    transaction |> Utils.prepare_transaction
   end
 end
