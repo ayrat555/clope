@@ -28,6 +28,20 @@ defmodule Clope.Profit do
   end
 
   def delta(
+    %Cluster{transaction_count: 0} = cluster,
+    %Transaction{} = transaction,
+    repulsion) do
+
+    {
+      new_width,
+      new_item_count,
+      new_transaction_count
+    } = calculate_new_stats(cluster, transaction)
+
+    profit_numerator(new_item_count, new_transaction_count, new_width, repulsion)
+  end
+
+  def delta(
       %Cluster{
         transaction_count: transaction_count,
         item_count: item_count,

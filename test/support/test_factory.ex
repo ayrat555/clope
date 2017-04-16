@@ -67,6 +67,11 @@ defmodule Clope.TestFactory do
     }
   end
 
+
+  def build_list_from_string(:transaction, transactions) do
+    transactions |> Enum.map(&build_from_string(:transaction, &1))
+  end
+
   def build_from_string(:transaction, transaction) do
     transaction |> Utils.prepare_transaction
   end
