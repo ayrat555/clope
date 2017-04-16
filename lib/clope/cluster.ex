@@ -26,6 +26,12 @@ defmodule Clope.Cluster do
     end
   end
 
+  def member?(
+      %Cluster{transactions: transactions} = cluster,
+      %Transaction{} = transaction) do
+    transactions |> Enum.member?(transaction)
+  end
+
   defp _add_transaction(
       %Cluster{
         transactions: transactions,

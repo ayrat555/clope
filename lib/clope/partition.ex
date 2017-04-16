@@ -2,6 +2,7 @@ defmodule Clope.Partition do
   defstruct clusters: []
   alias Clope.Partition
   alias Clope.Cluster
+  alias Clope.Transaction
 
   def partition(clusters) when is_list(clusters) do
     %Partition{clusters: clusters}
@@ -29,5 +30,12 @@ defmodule Clope.Partition do
     partition
     |> remove_cluster(old_cluster)
     |> add_cluster(new_cluster)
+  end
+
+  def find_cluster(%Partition{clusters: clusters} = partition, %Transaction{} = transaction) do
+    clusters
+    |> Enum.find(fn(cluster) ->
+      cluster |> Cluster.member?(transaction)
+    end)
   end
 end

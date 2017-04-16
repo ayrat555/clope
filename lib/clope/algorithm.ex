@@ -4,9 +4,9 @@ defmodule Clope.Algorithm do
   alias Clope.Partition
 
   def clusters(transactions, repulsion) do
-    initial_clusters = transactions |> initialize_clusters(repulsion)
+    partition = transactions |> initialize_clusters(repulsion)
 
-
+    # optimize_clusters(partition, transactions, repulstion)
   end
 
   def initialize_clusters(transactions, repulsion) do
@@ -17,6 +17,52 @@ defmodule Clope.Algorithm do
       transaction |> add_to_partition(clusters, repulsion)
     end)
   end
+
+  # def optimize_clusters(partition, transactions, repulsion) do
+  #   _optimize_clusters(initial_clusters, transactions, repulsion, true)
+  # end
+
+  # defp iterate(partition, _transactions, _repulstion, false) do
+  #   partition
+  # end
+
+  # defp iterate(partition, transactions, repulsion, moved) do
+  #   _optimize_clusters(partition, transactions, repulsion, moved)
+  # end
+
+  # defp _optimize_clusters(partition, [transaction | tail], repulsion, moved) do
+  #   old_cluster = Partition.find_cluster(partition, transaction)
+  #   new_cluster = Cluster.remove_transaction(old_cluster, transaction)
+  #   new_partition = Partition.replace_cluster(partition, old_cluster, new_cluster)
+
+  #   optimized_partition = add_to_partition(transaction, new_partition, repulsion)
+
+  #   moved = unless moved do
+  #     optimized_cluster = Partition.find_cluster(optimized_cluster, transaction)
+  #     optimized_cluster == old_cluster
+  #   else
+  #     moved
+  #   end
+
+  #   _optimize_clusters(optimized_partition, tail, repulsion, moved)
+  # end
+
+  # defp _optimize_clusters(partition, [transaction | []], repulsion, moved) do
+  #   old_cluster = Partition.find_cluster(partition, transaction)
+  #   new_cluster = Cluster.remove_transaction(old_cluster, transaction)
+  #   new_partition = Partition.replace_cluster(partition, old_cluster, new_cluster)
+
+  #   optimized_partition = add_to_partition(transaction, new_partition, repulsion)
+
+  #   moved = unless moved do
+  #     optimized_cluster = Partition.find_cluster(optimized_cluster, transaction)
+  #     optimized_cluster == old_cluster
+  #   else
+  #     moved
+  #   end
+
+  #   iterate(partition, )
+  # end
 
   defp add_to_partition(
       transaction,
