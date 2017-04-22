@@ -4,12 +4,12 @@ defmodule Clope.Algorithm do
   alias Clope.Partition
 
   def clusters(transactions, repulsion) do
-    partition = transactions |> initialize_clusters(repulsion)
-
-    # optimize_clusters(partition, transactions, repulstion)
+    transactions
+    |> initialize_partition(repulsion)
+    |> optimize_partition(transactions, repulsion, true)
   end
 
-  def initialize_clusters(transactions, repulsion) do
+  def initialize_partition(transactions, repulsion) do
     partition = %Partition{}
 
     transactions
@@ -18,51 +18,51 @@ defmodule Clope.Algorithm do
     end)
   end
 
-  # def optimize_clusters(partition, transactions, repulsion) do
-  #   _optimize_clusters(initial_clusters, transactions, repulsion, true)
-  # end
+  def optimize_partition(partition, _transactions, _repulstion, false) do
+    partition
+  end
 
-  # defp iterate(partition, _transactions, _repulstion, false) do
-  #   partition
-  # end
+  def optimize_partition(%Partition{} = partition, transactions, repulsion, optimized) do
+    {optimized_partition, optimized} =
+      optimize_transactions(partition, transactions, repulsion, optimized)
 
-  # defp iterate(partition, transactions, repulsion, moved) do
-  #   _optimize_clusters(partition, transactions, repulsion, moved)
-  # end
+    :timer.sleep(1000)
 
-  # defp _optimize_clusters(partition, [transaction | tail], repulsion, moved) do
-  #   old_cluster = Partition.find_cluster(partition, transaction)
-  #   new_cluster = Cluster.remove_transaction(old_cluster, transaction)
-  #   new_partition = Partition.replace_cluster(partition, old_cluster, new_cluster)
+    optimize_partition(optimized_partition, transactions, repulsion, optimized) |> IO.inspect
+  end
 
-  #   optimized_partition = add_to_partition(transaction, new_partition, repulsion)
+  defp optimize_transactions(partition, [transaction | []], repulsion, optimized) do
+    {optimized_partition, optimized} =
+      transaction
+      |> reposition_in_partition(partition, repulsion, optimized)
 
-  #   moved = unless moved do
-  #     optimized_cluster = Partition.find_cluster(optimized_cluster, transaction)
-  #     optimized_cluster == old_cluster
-  #   else
-  #     moved
-  #   end
+    {optimized_partition, optimized}
+  end
 
-  #   _optimize_clusters(optimized_partition, tail, repulsion, moved)
-  # end
+  defp optimize_transactions(partition, [transaction | tail], repulsion, optimized) do
+    {optimized_partition, optimized} =
+      transaction
+      |> reposition_in_partition(partition, repulsion, optimized)
 
-  # defp _optimize_clusters(partition, [transaction | []], repulsion, moved) do
-  #   old_cluster = Partition.find_cluster(partition, transaction)
-  #   new_cluster = Cluster.remove_transaction(old_cluster, transaction)
-  #   new_partition = Partition.replace_cluster(partition, old_cluster, new_cluster)
+    optimize_transactions(optimized_partition, tail, repulsion, optimized)
+  end
 
-  #   optimized_partition = add_to_partition(transaction, new_partition, repulsion)
+  defp reposition_in_partition(transaction, partition, repulsion, optimized) do
+    old_cluster = Partition.find_cluster(partition, transaction)
+    new_cluster = Cluster.remove_transaction(old_cluster, transaction)
+    new_partition = Partition.replace_cluster(partition, old_cluster, new_cluster)
 
-  #   moved = unless moved do
-  #     optimized_cluster = Partition.find_cluster(optimized_cluster, transaction)
-  #     optimized_cluster == old_cluster
-  #   else
-  #     moved
-  #   end
+    optimized_partition = add_to_partition(transaction, new_partition, repulsion)
 
-  #   iterate(partition, )
-  # end
+    optimized = if optimized do
+      optimized
+    else
+      optimized_cluster = Partition.find_cluster(optimized_partition, transaction)
+      optimized_cluster == old_cluster
+    end
+    :timer.sleep(1000)
+    {optimized_partition, optimized} |> IO.inspect
+  end
 
   defp add_to_partition(
       transaction,
@@ -71,6 +71,7 @@ defmodule Clope.Algorithm do
 
     clusters
     |> max_profit_cluster(transaction, repulsion)
+    |> IO.inspect
     |> add_to_cluster(partition, transaction)
   end
 
