@@ -1,4 +1,6 @@
 defmodule Clope.Utils do
+  alias Clope.Struct.Partition
+  alias Clope.Struct.Cluster
   alias Clope.Struct.Transaction
   alias Clope.Struct.Item
 
@@ -18,5 +20,23 @@ defmodule Clope.Utils do
    items
    |> Enum.uniq
    |> Enum.map(&Item.item/1)
+  end
+
+  def externalize_partition(%Partition{clusters: clusters}) do
+    clusters |> Enum.map(&externalize_cluster/1)
+  end
+
+  def externalize_cluster(%Cluster{transactions: transactions}) do
+    transactions |> Enum.map(&externalize_transaction/1)
+  end
+
+  def externalize_transaction(%Transaction{name: name, items: items}) do
+    items =
+      items
+      |> Enum.map(fn(%Item{value: value}) ->
+        value
+      end)
+
+    {name, items}
   end
 end

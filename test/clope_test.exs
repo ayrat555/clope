@@ -9,7 +9,21 @@ defmodule ClopeTest do
   @repulsion 4
 
   test "returns clustered data" do
-    @input
-    |> Clope.cluster(@repulsion)
+    result =
+      @input
+      |> Clope.cluster(@repulsion)
+
+    [
+      [
+        {"transaction1", ["object1", "object2", "object3"]}
+      ],
+      [
+        {"transaction3", ["object2", "object3"]}
+      ],
+      [
+        {"transaction2", ["object1", "object5"]},
+        {"transaction4", ["object1", "object5"]}
+      ]
+    ] = result
   end
 end

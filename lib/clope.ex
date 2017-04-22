@@ -8,5 +8,6 @@ defmodule Clope do
     transactions
     |> Utils.prepare_transactions
     |> Algorithm.clusters(repulsion)
+    |> Utils.externalize_partition
   end
 end
