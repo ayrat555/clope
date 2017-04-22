@@ -1,7 +1,7 @@
-defmodule Clope.TransactionTest do
+defmodule Clope.Struct.TransactionTest do
   use ExUnit.Case
   import Clope.TestFactory
-  alias Clope.Transaction
+  alias Clope.Struct.Transaction
 
   test "creates valid transaction" do
     items = build_list(3, :item)

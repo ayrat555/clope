@@ -1,7 +1,7 @@
-defmodule Clope.PartitionTest do
+defmodule Clope.Struct.PartitionTest do
   use ExUnit.Case
   import Clope.TestFactory
-  alias Clope.Partition
+  alias Clope.Struct.Partition
 
   test "adds cluster to partition" do
     partition = [

@@ -1,10 +1,10 @@
-defmodule Clope.Cluster do
+defmodule Clope.Struct.Cluster do
   defstruct transactions: [], transaction_count: 0,
     item_count: 0,  occ: %{}, width: 0
 
-  alias Clope.Transaction
-  alias Clope.Cluster
-  alias Clope.Item
+  alias Clope.Struct.Transaction
+  alias Clope.Struct.Cluster
+  alias Clope.Struct.Item
 
   def add_transaction(
       %Cluster{transactions: transactions} = cluster,

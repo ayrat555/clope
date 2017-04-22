@@ -1,8 +1,8 @@
-defmodule Clope.ClusterTest do
+defmodule Clope.Struct.ClusterTest do
   use ExUnit.Case
   import Clope.TestFactory
   import Clope.TestHelper
-  alias Clope.Cluster
+  alias Clope.Struct.Cluster
 
   test "recalculates cluster attributes when a new transaction is added" do
     %Cluster{transactions: transactions} = cluster = build(:cluster)

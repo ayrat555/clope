@@ -1,8 +1,8 @@
-defmodule Clope.Transaction do
+defmodule Clope.Struct.Transaction do
   defstruct [:name, :items]
 
-  alias Clope.Transaction
-  alias Clope.Item
+  alias Clope.Struct.Transaction
+  alias Clope.Struct.Item
 
   def transaction(name, items)
       when is_binary(name)

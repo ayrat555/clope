@@ -1,7 +1,7 @@
 defmodule Clope.Algorithm do
   alias Clope.Profit
-  alias Clope.Cluster
-  alias Clope.Partition
+  alias Clope.Struct.Cluster
+  alias Clope.Struct.Partition
 
   def clusters(transactions, repulsion) do
     transactions
@@ -55,18 +55,20 @@ defmodule Clope.Algorithm do
   defp reposition_in_partition(transaction, partition, repulsion, optimized) do
     old_cluster = Partition.find_cluster(partition, transaction)
     new_cluster = Cluster.remove_transaction(old_cluster, transaction)
-    new_partition = Partition.replace_cluster(partition, old_cluster, new_cluster)
+    new_partition =
+      Partition.replace_cluster(partition, old_cluster, new_cluster)
 
-    optimized_partition = add_to_partition(transaction, new_partition, repulsion)
+    optimized_partition =
+      add_to_partition(transaction, new_partition, repulsion)
 
     optimized = if optimized do
-      optimized_cluster = Partition.find_cluster(optimized_partition, transaction)
+      optimized_cluster =
+        Partition.find_cluster(optimized_partition, transaction)
+
       !Cluster.equal?(old_cluster, optimized_cluster)
     else
       optimized
     end
-
-    :timer.sleep(500)
 
     {optimized_partition, optimized}
   end
@@ -105,7 +107,12 @@ defmodule Clope.Algorithm do
   defp max_profit_cluster(clusters, transaction, repulsion) do
     new_cluster_delta = Profit.delta(%Cluster{}, transaction, repulsion)
 
-    max_profit_cluster(clusters, {new_cluster_delta, nil}, transaction, repulsion)
+    max_profit_cluster(
+      clusters,
+      {new_cluster_delta, nil},
+      transaction,
+      repulsion
+    )
   end
 
   defp max_profit_cluster([], {best_delta, best_cluster}, _transaction, _repulsion) do

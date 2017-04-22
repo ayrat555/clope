@@ -2,8 +2,8 @@ defmodule Clope.AlgorithmTest do
   use ExUnit.Case
   import Clope.TestFactory
   alias Clope.Algorithm
-  alias Clope.Partition
-  alias Clope.Cluster
+  alias Clope.Struct.Partition
+  alias Clope.Struct.Cluster
 
   test "initializes clusters" do
     transactions = build_list_from_string(:transaction,

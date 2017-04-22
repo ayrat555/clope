@@ -1,8 +1,8 @@
-defmodule Clope.Partition do
+defmodule Clope.Struct.Partition do
   defstruct clusters: []
-  alias Clope.Partition
-  alias Clope.Cluster
-  alias Clope.Transaction
+  alias Clope.Struct.Partition
+  alias Clope.Struct.Cluster
+  alias Clope.Struct.Transaction
 
   def partition(clusters) when is_list(clusters) do
     %Partition{clusters: clusters}
@@ -25,7 +25,8 @@ defmodule Clope.Partition do
   end
 
   def replace_cluster(%Partition{clusters: clusters} = partition, %Cluster{} = old_cluster, %Cluster{} = new_cluster) do
-    unless clusters |> Enum.member?(old_cluster), do: raise ArgumentError, message: "old_cluster is not a member of the partition"
+    unless clusters |> Enum.member?(old_cluster),
+      do: raise ArgumentError, message: "old_cluster is not a member of the partition"
 
     partition
     |> remove_cluster(old_cluster)

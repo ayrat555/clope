@@ -1,6 +1,6 @@
 defmodule Clope.TestHelper do
-  alias Clope.Transaction
-  alias Clope.Item
+  alias Clope.Struct.Transaction
+  alias Clope.Struct.Item
 
   def transaction_stats(transactions) when is_list(transactions) do
     {res_transaction_count, res_item_count, res_occ} =

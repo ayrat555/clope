@@ -3,10 +3,10 @@ defmodule Clope.TestFactory do
   import Clope.TestHelper
 
   alias Clope.Utils
-  alias Clope.Cluster
-  alias Clope.Partition
-  alias Clope.Item
-  alias Clope.Transaction
+  alias Clope.Struct.Cluster
+  alias Clope.Struct.Partition
+  alias Clope.Struct.Item
+  alias Clope.Struct.Transaction
 
   def transaction_factory do
     %Transaction{

@@ -1,6 +1,6 @@
 defmodule Clope.Utils do
-  alias Clope.Transaction
-  alias Clope.Item
+  alias Clope.Struct.Transaction
+  alias Clope.Struct.Item
 
   def prepare_transactions(transactions) when is_list(transactions) do
     transactions |> Enum.map(&prepare_transaction/1)
