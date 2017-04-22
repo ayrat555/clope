@@ -26,6 +26,18 @@ defmodule Clope.Cluster do
     end
   end
 
+  def equal?(
+      %Cluster{transactions: transactions1},
+      %Cluster{transactions: transactions2}) do
+    transactions1
+    |> Enum.all?(fn(transaction1) ->
+      transactions2
+      |> Enum.any?(fn(transaction2) ->
+        transactions1 == transactions2
+      end)
+    end)
+  end
+
   def member?(
       %Cluster{transactions: transactions} = cluster,
       %Transaction{} = transaction) do

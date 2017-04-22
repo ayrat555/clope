@@ -6,7 +6,7 @@ defmodule Clope.Algorithm do
   def clusters(transactions, repulsion) do
     transactions
     |> initialize_partition(repulsion)
-    |> optimize_partition(transactions, repulsion, true)
+    |> optimize_partition(transactions, repulsion)
   end
 
   def initialize_partition(transactions, repulsion) do
@@ -18,17 +18,22 @@ defmodule Clope.Algorithm do
     end)
   end
 
-  def optimize_partition(partition, _transactions, _repulstion, false) do
+  def optimize_partition(partition, transactions, repulsion) do
+    optimized_partition =
+      optimize_partition(partition, transactions, repulsion, true)
+
+    optimized_partition |> remove_empty_clusters
+  end
+
+  defp optimize_partition(partition, _transactions, _repulstion, false) do
     partition
   end
 
-  def optimize_partition(%Partition{} = partition, transactions, repulsion, optimized) do
+  defp optimize_partition(%Partition{} = partition, transactions, repulsion, optimized) do
     {optimized_partition, optimized} =
       optimize_transactions(partition, transactions, repulsion, optimized)
 
-    :timer.sleep(1000)
-
-    optimize_partition(optimized_partition, transactions, repulsion, optimized) |> IO.inspect
+    optimize_partition(optimized_partition, transactions, repulsion, optimized)
   end
 
   defp optimize_transactions(partition, [transaction | []], repulsion, optimized) do
@@ -55,23 +60,33 @@ defmodule Clope.Algorithm do
     optimized_partition = add_to_partition(transaction, new_partition, repulsion)
 
     optimized = if optimized do
-      optimized
-    else
       optimized_cluster = Partition.find_cluster(optimized_partition, transaction)
-      optimized_cluster == old_cluster
+      !Cluster.equal?(old_cluster, optimized_cluster)
+    else
+      optimized
     end
-    :timer.sleep(1000)
-    {optimized_partition, optimized} |> IO.inspect
+
+    :timer.sleep(500)
+
+    {optimized_partition, optimized}
   end
 
-  defp add_to_partition(
-      transaction,
+  defp remove_empty_clusters(%Partition{clusters: clusters}) do
+    clusters =
+      clusters
+      |> Enum.filter(fn(%Cluster{transaction_count: count}) ->
+        count != 0
+      end)
+
+    %Partition{clusters: clusters}
+  end
+
+  defp add_to_partition(transaction,
       %Partition{clusters: clusters} = partition,
       repulsion) do
 
     clusters
     |> max_profit_cluster(transaction, repulsion)
-    |> IO.inspect
     |> add_to_cluster(partition, transaction)
   end
 
@@ -100,7 +115,7 @@ defmodule Clope.Algorithm do
   defp max_profit_cluster([cluster | []], {best_delta, best_cluster}, transaction, repulsion) do
     delta = cluster |> Profit.delta(transaction, repulsion)
 
-    if best_delta < delta,
+    if best_delta <= delta,
       do: {delta, cluster},
       else: {best_delta, best_cluster}
   end
