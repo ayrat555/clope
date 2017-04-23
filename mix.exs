@@ -19,6 +19,7 @@ defmodule Clope.Mixfile do
   defp deps do
     [
       {:credo, "~> 0.7", only: [:dev, :test]},
+      {:uuid, "~> 1.1"},
       {:ex_machina, "~> 2.0"}
     ]
   end

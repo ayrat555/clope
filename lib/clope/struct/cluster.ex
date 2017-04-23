@@ -1,5 +1,5 @@
 defmodule Clope.Struct.Cluster do
-  defstruct transactions: [], transaction_count: 0,
+  defstruct uuid: UUID.uuid4(), transactions: [], transaction_count: 0,
     item_count: 0,  occ: %{}, width: 0
 
   alias Clope.Struct.Transaction
@@ -27,15 +27,9 @@ defmodule Clope.Struct.Cluster do
   end
 
   def equal?(
-      %Cluster{transactions: transactions1},
-      %Cluster{transactions: transactions2}) do
-    transactions1
-    |> Enum.all?(fn(transaction1) ->
-      transactions2
-      |> Enum.any?(fn(transaction2) ->
-        transactions1 == transactions2
-      end)
-    end)
+      %Cluster{uuid: uuid1},
+      %Cluster{uuid: uuid2}) do
+    uuid1 == uuid2
   end
 
   def member?(
