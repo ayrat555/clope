@@ -33,7 +33,7 @@ defmodule Clope.Struct.Partition do
     |> add_cluster(new_cluster)
   end
 
-  def find_cluster(%Partition{clusters: clusters} = partition, %Transaction{} = transaction) do
+  def find_cluster(%Partition{clusters: clusters}, %Transaction{} = transaction) do
     clusters
     |> Enum.find(fn(cluster) ->
       cluster |> Cluster.member?(transaction)

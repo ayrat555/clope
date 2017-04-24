@@ -11,7 +11,7 @@ defmodule ClopeTest do
     repulsion = 2
     result =
       @input
-      |> Clope.cluster(repulsion)
+      |> Clope.clusterize(repulsion)
 
     [
       [
@@ -29,7 +29,7 @@ defmodule ClopeTest do
     repulsion = 4
     result =
       @input
-      |> Clope.cluster(repulsion)
+      |> Clope.clusterize(repulsion)
 
     [
       [

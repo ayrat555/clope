@@ -33,7 +33,7 @@ defmodule Clope.Struct.Cluster do
   end
 
   def member?(
-      %Cluster{transactions: transactions} = cluster,
+      %Cluster{transactions: transactions},
       %Transaction{} = transaction) do
     transactions |> Enum.member?(transaction)
   end

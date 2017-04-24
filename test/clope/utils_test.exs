@@ -10,7 +10,7 @@ defmodule Clope.UtilsTest do
   ]
 
   test "converts input data to internal represantation" do
-    result = @input_transactions |> Utils.prepare_transactions
+    result = @input_transactions |> Utils.internalize_transactions
 
     [%Transaction{
         name: "transaction1",

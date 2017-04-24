@@ -1,5 +1,4 @@
 defmodule Clope.Profit do
-  alias Clope.Struct.Partition
   alias Clope.Struct.Cluster
   alias Clope.Struct.Transaction
   alias Clope.Struct.Item

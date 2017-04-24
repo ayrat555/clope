@@ -3,12 +3,20 @@ defmodule Clope.Algorithm do
   alias Clope.Struct.Cluster
   alias Clope.Struct.Partition
 
-  def clusters(transactions, repulsion) do
+  @doc """
+  Clusterize transactions.
+
+  """
+  def clusterize(transactions, repulsion) do
     transactions
     |> initialize_partition(repulsion)
     |> optimize_partition(transactions, repulsion)
   end
 
+  @doc """
+  Create initial clusters.
+
+  """
   def initialize_partition(transactions, repulsion) do
     partition = %Partition{}
 
@@ -18,6 +26,10 @@ defmodule Clope.Algorithm do
     end)
   end
 
+  @doc """
+  Optimize clusters.
+
+  """
   def optimize_partition(partition, transactions, repulsion) do
     optimized_partition =
       optimize_partition(partition, transactions, repulsion, true)
@@ -122,7 +134,7 @@ defmodule Clope.Algorithm do
   defp max_profit_cluster([cluster | []], {best_delta, best_cluster}, transaction, repulsion) do
     delta = cluster |> Profit.delta(transaction, repulsion)
 
-    if best_delta <= delta,
+    if best_delta < delta,
       do: {delta, cluster},
       else: {best_delta, best_cluster}
   end
