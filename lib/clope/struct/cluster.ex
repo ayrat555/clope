@@ -5,6 +5,7 @@ defmodule Clope.Struct.Cluster do
   alias Clope.Struct.Transaction
   alias Clope.Struct.Cluster
   alias Clope.Struct.Item
+  @moduledoc false
 
   def add_transaction(
       %Cluster{transactions: transactions} = cluster,

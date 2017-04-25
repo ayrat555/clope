@@ -3,6 +3,7 @@ defmodule Clope.Utils do
   alias Clope.Struct.Cluster
   alias Clope.Struct.Transaction
   alias Clope.Struct.Item
+  @moduledoc false
 
   def internalize_transactions(transactions) when is_list(transactions) do
     transactions |> Enum.map(&internalize_transaction/1)

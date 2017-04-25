@@ -2,6 +2,7 @@ defmodule Clope.Profit do
   alias Clope.Struct.Cluster
   alias Clope.Struct.Transaction
   alias Clope.Struct.Item
+  @moduledoc false
 
   def delta(
     %Cluster{transaction_count: 0} = cluster,

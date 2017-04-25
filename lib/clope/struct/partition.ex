@@ -3,6 +3,7 @@ defmodule Clope.Struct.Partition do
   alias Clope.Struct.Partition
   alias Clope.Struct.Cluster
   alias Clope.Struct.Transaction
+  @moduledoc false
 
   def partition(clusters) when is_list(clusters) do
     %Partition{clusters: clusters}

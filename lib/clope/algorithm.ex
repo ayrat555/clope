@@ -2,21 +2,14 @@ defmodule Clope.Algorithm do
   alias Clope.Profit
   alias Clope.Struct.Cluster
   alias Clope.Struct.Partition
+  @moduledoc false
 
-  @doc """
-  Clusterize transactions.
-
-  """
   def clusterize(transactions, repulsion) do
     transactions
     |> initialize_partition(repulsion)
     |> optimize_partition(transactions, repulsion)
   end
 
-  @doc """
-  Create initial clusters.
-
-  """
   def initialize_partition(transactions, repulsion) do
     partition = %Partition{}
 
@@ -26,10 +19,6 @@ defmodule Clope.Algorithm do
     end)
   end
 
-  @doc """
-  Optimize clusters.
-
-  """
   def optimize_partition(partition, transactions, repulsion) do
     optimized_partition =
       optimize_partition(partition, transactions, repulsion, true)

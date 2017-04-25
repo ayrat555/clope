@@ -1,6 +1,8 @@
 # Clope
 [![Build Status](https://semaphoreci.com/api/v1/ayrat555/clope/branches/master/badge.svg)](https://semaphoreci.com/ayrat555/clope)
 
+CLOPE: A Fast and Effective Clustering Algorithm for Transactional Data
+
 The algorithm's description
 http://www.inf.ufrgs.br/~alvares/CMP259DCBD/clope.pdf
 
@@ -23,4 +25,26 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
       [applications: [:clope]]
     end
     ```
+    
+## How to use
+
+    '''
+      iex> input = [
+        {"transaction1", ["object1", "object2", "object3"]},
+        {"transaction2", ["object1", "object5"]},
+        {"transaction3", ["object2", "object3"]},
+        {"transaction4", ["object1", "object5"]}
+      ]
+      iex> result = input |> Clope.clusterize(2)
+      [
+        [
+          {"transaction1", ["object1", "object2", "object3"]},
+          {"transaction3", ["object2", "object3"]}
+        ],
+        [
+          {"transaction2", ["object1", "object5"]},
+          {"transaction4", ["object1", "object5"]}
+        ]
+      ]
+    '''
 
