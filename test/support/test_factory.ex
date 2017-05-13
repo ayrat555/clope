@@ -28,7 +28,8 @@ defmodule Clope.TestFactory do
       transaction_count: transaction_count,
       width: width,
       item_count: item_count,
-      occ: occ
+      occ: occ,
+      uuid: UUID.uuid4
     }
   end
 
@@ -63,7 +64,8 @@ defmodule Clope.TestFactory do
       transaction_count: transaction_count,
       width: width,
       item_count: item_count,
-      occ: occ
+      occ: occ,
+      uuid: UUID.uuid4
     }
   end
 

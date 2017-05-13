@@ -1,11 +1,15 @@
 defmodule Clope.Struct.Cluster do
-  defstruct uuid: UUID.uuid4(), transactions: [], transaction_count: 0,
+  defstruct uuid: nil, transactions: [], transaction_count: 0,
     item_count: 0,  occ: %{}, width: 0
 
   alias Clope.Struct.Transaction
   alias Clope.Struct.Cluster
   alias Clope.Struct.Item
   @moduledoc false
+
+  def new do
+    %Cluster{uuid: UUID.uuid4}
+  end
 
   def add_transaction(
       %Cluster{transactions: transactions} = cluster,
@@ -44,7 +48,8 @@ defmodule Clope.Struct.Cluster do
         transactions: transactions,
         item_count: item_count,
         transaction_count: transaction_count,
-        occ: occ
+        occ: occ,
+        uuid: uuid
       },
       %Transaction{items: items} = transaction) do
     new_transactions = transactions ++ [transaction]
@@ -61,7 +66,8 @@ defmodule Clope.Struct.Cluster do
       transaction_count: new_transaction_count,
       width: new_width,
       item_count: new_item_count,
-      occ: new_occ
+      occ: new_occ,
+      uuid: uuid
     }
   end
 
@@ -70,7 +76,8 @@ defmodule Clope.Struct.Cluster do
         transactions: transactions,
         item_count: item_count,
         transaction_count: transaction_count,
-        occ: occ
+        occ: occ,
+        uuid: uuid
       },
       %Transaction{items: items} = transaction) do
     new_transactions = transactions -- [transaction]
@@ -87,7 +94,8 @@ defmodule Clope.Struct.Cluster do
       transaction_count: new_transaction_count,
       width: new_width,
       item_count: new_item_count,
-      occ: new_occ
+      occ: new_occ,
+      uuid: uuid
     }
   end
 

@@ -2,6 +2,10 @@ defmodule Clope do
   alias Clope.Algorithm
   alias Clope.Utils
 
+  @moduledoc """
+  CLOPE: a fast and effective clustering algorithm for transactional data.
+  """
+
   @doc """
   Clusterize transactions with a given repulsion parameter.
 

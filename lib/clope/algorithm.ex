@@ -11,11 +11,9 @@ defmodule Clope.Algorithm do
   end
 
   def initialize_partition(transactions, repulsion) do
-    partition = %Partition{}
-
     transactions
-    |> Enum.reduce(partition, fn(transaction, clusters) ->
-      transaction |> add_to_partition(clusters, repulsion)
+    |> Enum.reduce(%Partition{}, fn(transaction, partition) ->
+      transaction |> add_to_partition(partition, repulsion)
     end)
   end
 
@@ -94,7 +92,9 @@ defmodule Clope.Algorithm do
   end
 
   defp add_to_cluster({_delta, nil}, partition, transaction) do
-    new_cluster = Cluster.add_transaction(%Cluster{}, transaction)
+    new_cluster =
+      Cluster.new
+      |> Cluster.add_transaction(transaction)
 
     Partition.add_cluster(partition, new_cluster)
   end

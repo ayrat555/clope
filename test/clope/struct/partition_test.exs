@@ -62,8 +62,9 @@ defmodule Clope.Struct.PartitionTest do
       {"transaction7", ["object1", "object2"]},
       {"transaction9", ["object5", "object6"]}
     ]
-    cluster_to_replace = build_from_string(:cluster, Enum.at(partition, 1))
     partition = build_from_string(:partition, partition)
+    %Partition{clusters: clusters} = partition
+    cluster_to_replace = clusters |> Enum.at(1)
     new_cluster = build_from_string(:cluster, new_cluster)
 
     new_partition = partition |> Partition.replace_cluster(cluster_to_replace, new_cluster)

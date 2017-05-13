@@ -3,7 +3,7 @@ defmodule Clope.Mixfile do
 
   def project do
     [app: :clope,
-     version: "0.1.0",
+     version: "0.1.1",
      elixir: "~> 1.4",
      description: "CLOPE: A Fast and Effective Clustering Algorithm for Transactional Data",
      package: [
