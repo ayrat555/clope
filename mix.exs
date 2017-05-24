@@ -19,14 +19,14 @@ defmodule Clope.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :ex_machina]]
+    [applications: [:logger]]
   end
 
   defp deps do
     [
       {:credo, "~> 0.7", only: [:dev, :test]},
       {:uuid, "~> 1.1"},
-      {:ex_machina, "~> 2.0"},
+      {:ex_machina, "~> 2.0", only: :test},
       {:ex_doc, "~> 0.14", only: :dev, runtime: false}
     ]
   end
