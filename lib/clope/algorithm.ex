@@ -28,7 +28,7 @@ defmodule Clope.Algorithm do
     partition
   end
 
-  defp optimize_partition(%Partition{} = partition, transactions, repulsion, optimized) do
+  defp optimize_partition(partition, transactions, repulsion, optimized) do
     {optimized_partition, optimized} =
       optimize_transactions(partition, transactions, repulsion, optimized)
 
@@ -123,7 +123,7 @@ defmodule Clope.Algorithm do
   defp max_profit_cluster([cluster | []], {best_delta, best_cluster}, transaction, repulsion) do
     delta = cluster |> Profit.delta(transaction, repulsion)
 
-    if best_delta < delta,
+    if best_delta <= delta,
       do: {delta, cluster},
       else: {best_delta, best_cluster}
   end
@@ -132,7 +132,7 @@ defmodule Clope.Algorithm do
     delta = cluster |> Profit.delta(transaction, repulsion)
 
     {best_delta, best_cluster} =
-      if best_delta < delta,
+      if best_delta <= delta,
         do: {delta, cluster},
         else: {best_delta, best_cluster}
 
