@@ -4,5 +4,5 @@ defmodule Clope.Struct.Item do
   alias Clope.Struct.Item
   @moduledoc false
 
-  def item(value) when is_binary(value), do: %Item{value: value}
+  def item(value), do: %Item{value: value}
 end
