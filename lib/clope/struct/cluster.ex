@@ -65,7 +65,6 @@ defmodule Clope.Struct.Cluster do
       item_count: new_item_count,
       transaction_count: new_transaction_count,
       width: new_width,
-      item_count: new_item_count,
       occ: new_occ,
       uuid: uuid
     }
@@ -93,7 +92,6 @@ defmodule Clope.Struct.Cluster do
       item_count: new_item_count,
       transaction_count: new_transaction_count,
       width: new_width,
-      item_count: new_item_count,
       occ: new_occ,
       uuid: uuid
     }

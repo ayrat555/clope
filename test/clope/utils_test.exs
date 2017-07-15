@@ -27,7 +27,10 @@ defmodule Clope.UtilsTest do
     ] = result
   end
   test "non-atom item values" do
-     result = [{1, [{:a}, :b]}, {2,  [:b, :c]} , {3, [:z,:y]}] |> Clope.clusterize(2)
+    result =
+      [{1, [{:a}, :b]}, {2, [:b, :c]}, {3, [:z, :y]}]
+      |> Clope.clusterize(2)
+
      assert result == [[{1, [{:a}, :b]}], [{2, [:b, :c]}], [{3, [:z, :y]}]]
   end
 end

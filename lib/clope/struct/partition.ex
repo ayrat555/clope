@@ -25,9 +25,7 @@ defmodule Clope.Struct.Partition do
     %Partition{clusters: clusters -- [cluster]}
   end
 
-  def replace_cluster(%Partition{clusters: clusters} = partition, %Cluster{} = old_cluster, %Cluster{} = new_cluster) do
-    unless clusters |> Enum.member?(old_cluster),
-      do: raise ArgumentError, message: "old_cluster is not a member of the partition"
+  def replace_cluster(%Partition{} = partition, %Cluster{} = old_cluster, %Cluster{} = new_cluster) do
 
     partition
     |> remove_cluster(old_cluster)
