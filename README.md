@@ -14,7 +14,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
     ```
     def deps do
-      [{:clope, "~> 0.1.0"}]
+      [{:clope, "~> 0.1.3"}]
     end
     ```
 
@@ -28,7 +28,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     
 ## How to use
 
-    '''
+    ```
       iex> input = [
         {"transaction1", ["object1", "object2", "object3"]},
         {"transaction2", ["object1", "object5"]},
@@ -46,5 +46,5 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
           {"transaction4", ["object1", "object5"]}
         ]
       ]
-    '''
+    ```
 
