@@ -9,7 +9,7 @@ defmodule Clope.Struct.TransactionTest do
 
     %Transaction{
       name: ^name,
-      items: ^items,
+      items: ^items
     } = Transaction.transaction(name, items)
   end
 end

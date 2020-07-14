@@ -10,27 +10,31 @@ defmodule Clope.UtilsTest do
   ]
 
   test "converts input data to internal represantation" do
-    result = @input_transactions |> Utils.internalize_transactions
+    result = @input_transactions |> Utils.internalize_transactions()
 
-    [%Transaction{
+    [
+      %Transaction{
         name: "transaction1",
         items: [
           %Item{value: "item1"},
           %Item{value: "item2"}
-        ]},
-     %Transaction{
-       name: "transaction2",
-       items: [
-         %Item{value: "item5"},
-         %Item{value: "item1"}
-       ]}
+        ]
+      },
+      %Transaction{
+        name: "transaction2",
+        items: [
+          %Item{value: "item5"},
+          %Item{value: "item1"}
+        ]
+      }
     ] = result
   end
+
   test "non-atom item values" do
     result =
       [{1, [{:a}, :b]}, {2, [:b, :c]}, {3, [:z, :y]}]
       |> Clope.clusterize(2)
 
-     assert result == [[{1, [{:a}, :b]}], [{2, [:b, :c]}], [{3, [:z, :y]}]]
+    assert result == [[{1, [{:a}, :b]}], [{2, [:b, :c]}], [{3, [:z, :y]}]]
   end
 end

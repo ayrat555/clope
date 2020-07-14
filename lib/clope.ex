@@ -31,8 +31,8 @@ defmodule Clope do
       when is_list(transactions)
       when is_number(repulsion) do
     transactions
-    |> Utils.internalize_transactions
+    |> Utils.internalize_transactions()
     |> Algorithm.clusterize(repulsion)
-    |> Utils.externalize_partition
+    |> Utils.externalize_partition()
   end
 end

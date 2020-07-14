@@ -25,8 +25,11 @@ defmodule Clope.Struct.Partition do
     %Partition{clusters: clusters -- [cluster]}
   end
 
-  def replace_cluster(%Partition{} = partition, %Cluster{} = old_cluster, %Cluster{} = new_cluster) do
-
+  def replace_cluster(
+        %Partition{} = partition,
+        %Cluster{} = old_cluster,
+        %Cluster{} = new_cluster
+      ) do
     partition
     |> remove_cluster(old_cluster)
     |> add_cluster(new_cluster)
@@ -34,7 +37,7 @@ defmodule Clope.Struct.Partition do
 
   def find_cluster(%Partition{clusters: clusters}, %Transaction{} = transaction) do
     clusters
-    |> Enum.find(fn(cluster) ->
+    |> Enum.find(fn cluster ->
       cluster |> Cluster.member?(transaction)
     end)
   end

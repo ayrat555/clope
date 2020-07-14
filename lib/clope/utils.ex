@@ -18,9 +18,9 @@ defmodule Clope.Utils do
   end
 
   def internalize_items(items) do
-   items
-   |> Enum.uniq
-   |> Enum.map(&Item.item/1)
+    items
+    |> Enum.uniq()
+    |> Enum.map(&Item.item/1)
   end
 
   def externalize_partition(%Partition{clusters: clusters}) do
@@ -34,7 +34,7 @@ defmodule Clope.Utils do
   def externalize_transaction(%Transaction{name: name, items: items}) do
     items =
       items
-      |> Enum.map(fn(%Item{value: value}) ->
+      |> Enum.map(fn %Item{value: value} ->
         value
       end)
 

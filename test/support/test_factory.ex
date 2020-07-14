@@ -1,4 +1,6 @@
 defmodule Clope.TestFactory do
+  @moduledoc false
+
   use ExMachina
   import Clope.TestHelper
 
@@ -29,17 +31,17 @@ defmodule Clope.TestFactory do
       width: width,
       item_count: item_count,
       occ: occ,
-      uuid: UUID.uuid4
+      uuid: UUID.uuid4()
     }
   end
 
   def build_random_list(max_transaction_count, :transaction, unique_item_count \\ 10) do
     item_pool = :rand.uniform(unique_item_count) |> build_list(:item)
-    transaction_count = max_transaction_count |> :rand.uniform
+    transaction_count = max_transaction_count |> :rand.uniform()
 
     1..transaction_count
-    |> Enum.map(fn(_) ->
-      item_count = unique_item_count |> :rand.uniform
+    |> Enum.map(fn _ ->
+      item_count = unique_item_count |> :rand.uniform()
       items = item_pool |> Enum.take_random(item_count)
 
       build(:transaction, %{items: items})
@@ -47,8 +49,9 @@ defmodule Clope.TestFactory do
   end
 
   def build_from_string(:partition, clusters) do
-    clusters = clusters
-      |> Enum.map(fn(transactions) ->
+    clusters =
+      clusters
+      |> Enum.map(fn transactions ->
         build_from_string(:cluster, transactions)
       end)
 
@@ -56,7 +59,7 @@ defmodule Clope.TestFactory do
   end
 
   def build_from_string(:cluster, transactions) do
-    transactions = transactions |> Utils.internalize_transactions
+    transactions = transactions |> Utils.internalize_transactions()
     {transaction_count, item_count, width, occ} = transactions |> transaction_stats
 
     %Cluster{
@@ -65,12 +68,12 @@ defmodule Clope.TestFactory do
       width: width,
       item_count: item_count,
       occ: occ,
-      uuid: UUID.uuid4
+      uuid: UUID.uuid4()
     }
   end
 
   def build_from_string(:transaction, transaction) do
-    transaction |> Utils.internalize_transaction
+    transaction |> Utils.internalize_transaction()
   end
 
   def build_list_from_string(:transaction, transactions) do

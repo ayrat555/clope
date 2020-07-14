@@ -1,5 +1,4 @@
 # Clope
-[![Build Status](https://semaphoreci.com/api/v1/ayrat555/clope/branches/master/badge.svg)](https://semaphoreci.com/ayrat555/clope)
 
 CLOPE: A Fast and Effective Clustering Algorithm for Transactional Data
 
@@ -25,7 +24,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     [applications: [:clope]]
   end
 ```
-    
+
 ## How to use
 
 ```elixir
@@ -47,4 +46,3 @@ iex> result = input |> Clope.clusterize(2)
   ]
 ]
 ```
-

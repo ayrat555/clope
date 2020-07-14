@@ -1,5 +1,6 @@
 defmodule ClopeTest do
   use ExUnit.Case
+
   @input [
     {"transaction1", ["object1", "object2", "object3"]},
     {"transaction2", ["object1", "object5"]},
@@ -9,6 +10,7 @@ defmodule ClopeTest do
 
   test "clusterizes data with repulsion of 2" do
     repulsion = 2
+
     result =
       @input
       |> Clope.clusterize(repulsion)
@@ -27,6 +29,7 @@ defmodule ClopeTest do
 
   test "clusterizes data with repulsion of 4" do
     repulsion = 4
+
     result =
       @input
       |> Clope.clusterize(repulsion)

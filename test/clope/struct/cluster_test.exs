@@ -17,12 +17,14 @@ defmodule Clope.Struct.ClusterTest do
     } = cluster |> Cluster.add_transaction(new_transaction)
 
     assert new_transactions == transactions ++ [new_transaction]
+
     {
       transaction_count,
       item_count,
       width,
       occ
     } = new_transactions |> transaction_stats
+
     assert transaction_count == new_transaction_count
     assert width == new_width
     assert item_count == new_item_count
@@ -42,16 +44,17 @@ defmodule Clope.Struct.ClusterTest do
     } = cluster |> Cluster.remove_transaction(transaction)
 
     assert new_transactions == transactions -- [transaction]
+
     {
       transaction_count,
       item_count,
       width,
       occ
     } = new_transactions |> transaction_stats
+
     assert transaction_count == new_transaction_count
     assert width == new_width
     assert item_count == new_item_count
     assert occ == new_occ
   end
 end
-
