@@ -4,7 +4,7 @@ defmodule Clope.Mixfile do
   def project do
     [
       app: :clope,
-      version: "0.1.3",
+      version: "0.1.4",
       elixir: "~> 1.4",
       description: "CLOPE: A Fast and Effective Clustering Algorithm for Transactional Data",
       package: [
@@ -27,7 +27,8 @@ defmodule Clope.Mixfile do
     [
       {:credo, "~> 1.4", only: [:dev, :test]},
       {:elixir_uuid, "~> 1.2"},
-      {:ex_machina, "~> 2.4"}
+      {:ex_machina, "~> 2.4"},
+      {:ex_doc, "~> 0.22", only: :dev, runtime: false}
     ]
   end
 

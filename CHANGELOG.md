@@ -1,3 +1,6 @@
+# 0.1.4
+* Format code and update deps
+
 # 0.1.3
 * Change `Clope.Struct.Item` to accept any value not just `String` as value.
 
